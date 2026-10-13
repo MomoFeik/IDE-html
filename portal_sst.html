@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123047">
+  <title>Portal SST | Seguridad y Salud en el Trabajo</title>
+  <style>
+    :root {
+      --navy: #123047;
+      --navy-2: #1c4660;
+      --teal: #11a6a0;
+      --gold: #f4b942;
+      --paper: #f3f6f8;
+      --ink: #203342;
+      --muted: #6b7d89;
+      --white: #fff;
+      --radius: 18px;
+      --shadow: 0 12px 34px rgba(18,48,71,.10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif; line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10; background: rgba(18,48,71,.97);
+      color: white; box-shadow: 0 4px 20px rgba(0,0,0,.12);
+      backdrop-filter: blur(10px);
+    }
+    .nav-wrap {
+      max-width: 1200px; margin: auto; padding: 0 24px; min-height: 76px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .3px; }
+    .brand-mark {
+      width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px;
+      color: var(--navy); background: var(--gold); font-size: 22px;
+    }
+    .brand small { display: block; font-size: 11px; letter-spacing: 1.8px; color: #b9cbd5; font-weight: 600; }
+    nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    nav a { padding: 10px 13px; color: #e4edf2; font-size: 14px; border-radius: 9px; transition: .2s; }
+    nav a:hover { background: rgba(255,255,255,.12); color: white; }
+    .hero {
+      color: white; overflow: hidden; position: relative;
+      background: radial-gradient(circle at 85% 25%, rgba(17,166,160,.35), transparent 28%),
+                  linear-gradient(120deg, #123047 0%, #1c4660 60%, #176b70 100%);
+    }
+    .hero-inner {
+      max-width: 1200px; margin: auto; padding: 76px 24px 84px;
+      display: grid; grid-template-columns: 1.25fr .75fr; gap: 46px; align-items: center;
+    }
+    .eyebrow { color: #82e1d9; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 800; font-size: 12px; }
+    h1 { font-size: clamp(36px, 5vw, 58px); line-height: 1.08; margin: 17px 0 20px; letter-spacing: -1.5px; }
+    .hero p { color: #d8e5eb; font-size: 17px; max-width: 630px; margin: 0 0 28px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border: 0; border-radius: 10px; padding: 12px 17px; cursor: pointer;
+      font-weight: 750; font-size: 14px; transition: transform .2s, opacity .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-glass { color: white; border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.08); }
+    .hero-art { min-height: 280px; display: grid; place-items: center; position: relative; }
+    .shield {
+      width: 220px; height: 250px; clip-path: polygon(50% 0, 92% 15%, 88% 62%, 72% 83%, 50% 100%, 28% 83%, 12% 62%, 8% 15%);
+      display: grid; place-items: center; background: linear-gradient(145deg, #f8ce68, #f4b942);
+      color: var(--navy); filter: drop-shadow(0 20px 30px rgba(0,0,0,.2));
+    }
+    .shield span { font-size: 90px; font-weight: 900; }
+    .orbit { position: absolute; width: 285px; height: 285px; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; }
+    .orbit:before, .orbit:after { content: ""; position: absolute; border-radius: 50%; background: var(--teal); width: 12px; height: 12px; }
+    .orbit:before { top: 28px; right: 34px; } .orbit:after { bottom: 20px; left: 22px; background: var(--gold); }
+    main { max-width: 1200px; margin: auto; padding: 46px 24px 70px; }
+    .section { margin-bottom: 48px; scroll-margin-top: 95px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+    .section-head h2 { margin: 0; color: var(--navy); font-size: clamp(24px, 3vw, 32px); letter-spacing: -.6px; }
+    .section-head p { margin: 6px 0 0; color: var(--muted); }
+    .kicker { color: var(--teal); text-transform: uppercase; letter-spacing: 1.8px; font-weight: 800; font-size: 11px; margin-bottom: 7px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { background: white; border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border: 1px solid #e8eef1; }
+    .icon-box { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; background: #e2f6f3; color: #087d79; font-size: 23px; margin-bottom: 17px; }
+    .card h3 { color: var(--navy); margin: 0 0 9px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .quote-panel {
+      background: white; border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 1fr auto; gap: 22px; align-items: center; border-left: 5px solid var(--teal);
+    }
+    .quote-panel blockquote { margin: 0; font-size: clamp(22px, 3vw, 31px); font-weight: 800; color: var(--navy); line-height: 1.25; }
+    .quote-panel .hint { color: var(--muted); font-size: 13px; margin-top: 10px; }
+    .quote-tools { min-width: 220px; display: flex; flex-direction: column; gap: 9px; }
+    input[type="text"], input[type="url"] {
+      width: 100%; border: 1px solid #d8e2e8; background: #fbfcfd; border-radius: 9px;
+      padding: 11px 12px; font: inherit; font-size: 14px; color: var(--ink);
+    }
+    input:focus { outline: 3px solid rgba(17,166,160,.18); border-color: var(--teal); }
+    .profile-layout { display: grid; grid-template-columns: 290px 1fr; gap: 20px; }
+    .profile-card { text-align: center; }
+    .avatar {
+      width: 142px; height: 142px; margin: 0 auto 16px; border-radius: 50%; overflow: hidden;
+      border: 5px solid #e4f5f3; background: #e8eef1; display: grid; place-items: center;
+      color: #77909c; font-size: 48px;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .upload-label { display: inline-flex; cursor: pointer; margin-top: 15px; }
+    input[type="file"] { display: none; }
+    .profile-info { display: flex; flex-direction: column; justify-content: center; }
+    .profile-info h3 { margin: 0 0 10px; color: var(--navy); font-size: 23px; }
+    .profile-info p { color: var(--muted); margin: 0 0 15px; }
+    .tag { display: inline-flex; align-self: flex-start; padding: 7px 11px; border-radius: 30px; color: #087d79; background: #e2f6f3; font-size: 12px; font-weight: 800; }
+    .video-card { background: white; border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+    .video-frame { aspect-ratio: 16/9; width: 100%; overflow: hidden; border-radius: 12px; background: #0c1e2a; }
+    .video-frame iframe { width: 100%; height: 100%; border: 0; }
+    .video-caption { display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 15px 5px 3px; }
+    .video-caption strong { color: var(--navy); }
+    .video-caption span { color: var(--muted); font-size: 13px; }
+    .notice { margin-top: 12px; font-size: 12px; color: var(--muted); }
+    .resources { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .resource { display: flex; align-items: flex-start; gap: 14px; }
+    .resource .icon-box { flex: 0 0 48px; margin: 0; }
+    footer { background: #0c2638; color: #d4e1e8; padding: 27px 24px; }
+    .footer-inner { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    footer strong { color: white; }
+    footer small { color: #9db2bf; }
+    @media (max-width: 850px) {
+      .hero-inner { grid-template-columns: 1fr; padding-top: 55px; }
+      .hero-art { min-height: 220px; }
+      .shield { width: 165px; height: 190px; } .shield span { font-size: 70px; }
+      .orbit { width: 225px; height: 225px; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .profile-layout { grid-template-columns: 1fr; }
+      .quote-panel { grid-template-columns: 1fr; }
+      .quote-tools { min-width: 0; }
+    }
+    @media (max-width: 600px) {
+      .nav-wrap { padding: 14px 18px; align-items: flex-start; flex-direction: column; gap: 10px; }
+      nav { width: 100%; gap: 2px; }
+      nav a { padding: 8px 9px; font-size: 12px; }
+      .hero-inner { padding-left: 20px; padding-right: 20px; }
+      main { padding: 32px 16px 50px; }
+      .grid, .resources { grid-template-columns: 1fr; }
+      .section-head, .video-caption { align-items: flex-start; flex-direction: column; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="nav-wrap">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark">✚</span>
+        <span>PORTAL SST<small>SEGURIDAD · SALUD · PREVENCIÓN</small></span>
+      </a>
+      <nav aria-label="Menú principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#lema">Lema SST</a>
+        <a href="#perfil">Mi perfil</a>
+        <a href="#video">Video SST</a>
+        <a href="#recursos">Recursos</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">La prevención empieza contigo</div>
+        <h1>Un trabajo seguro<br>es un futuro mejor.</h1>
+        <p>Un espacio para promover una cultura de prevención, reforzar los hábitos seguros y recordar que la seguridad y la salud en el trabajo son responsabilidad de todos.</p>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="#lema">✦ Personalizar lema</a>
+          <a class="btn btn-glass" href="#video">▶ Ver video SST</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit"></div><div class="shield"><span>✓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="section" id="lema">
+      <div class="section-head">
+        <div><div class="kicker">Mensaje preventivo</div><h2>Lema de seguridad y SST</h2><p>Escribe tu lema y actualízalo cuando quieras.</p></div>
+      </div>
+      <div class="quote-panel">
+        <div>
+          <blockquote id="sloganDisplay">“La seguridad no es una opción, es un compromiso de todos.”</blockquote>
+          <div class="hint">Un buen lema debe ser breve, claro y fácil de recordar.</div>
+        </div>
+        <div class="quote-tools">
+          <label for="sloganInput"><strong>Tu lema</strong></label>
+          <input type="text" id="sloganInput" maxlength="150" placeholder="Escribe aquí tu lema SST">
+          <button class="btn btn-gold" id="saveSlogan" type="button">Actualizar lema</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="principios-title">
+      <div class="section-head">
+        <div><div class="kicker">Nuestra cultura</div><h2 id="principios-title">La seguridad se construye cada día</h2><p>Pequeñas acciones preventivas hacen una gran diferencia.</p></div>
+      </div>
+      <div class="grid">
+        <article class="card"><div class="icon-box">⛑</div><h3>Prevenir antes que lamentar</h3><p>Identifica peligros, evalúa los riesgos y aplica controles antes de iniciar cada tarea.</p></article>
+        <article class="card"><div class="icon-box">✓</div><h3>Trabajar de forma segura</h3><p>Utiliza correctamente los equipos de protección personal y respeta los procedimientos.</p></article>
+        <article class="card"><div class="icon-box">♡</div><h3>Cuidarnos entre todos</h3><p>Comunica condiciones inseguras, participa en las capacitaciones y ayuda a tus compañeros.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="perfil">
+      <div class="section-head">
+        <div><div class="kicker">Presentación personal</div><h2>Mi perfil</h2><p>Agrega tu fotografía y personaliza esta sección.</p></div>
+      </div>
+      <div class="profile-layout">
+        <article class="card profile-card">
+          <div class="avatar" id="avatar"><span id="avatarPlaceholder">＋</span></div>
+          <h3 id="profileName">Tu nombre aquí</h3>
+          <p style="color:var(--muted);font-size:13px;margin:0;">Responsable / colaborador SST</p>
+          <label class="btn btn-gold upload-label" for="photoInput">Subir mi foto</label>
+          <input id="photoInput" type="file" accept="image/*">
+        </article>
+        <article class="card profile-info">
+          <h3>Comprometidos con la prevención</h3>
+          <p>La seguridad y salud en el trabajo requiere participación activa, comunicación y mejora continua. Este portal puede utilizarse como espacio de presentación, sensibilización y difusión de mensajes preventivos.</p>
+          <label for="nameInput"><strong>Nombre para mostrar</strong></label>
+          <input type="text" id="nameInput" placeholder="Escribe tu nombre" style="margin:8px 0 14px;max-width:420px;">
+          <label for="roleInput"><strong>Cargo o área</strong></label>
+          <input type="text" id="roleInput" placeholder="Ej. Área de Seguridad y Salud en el Trabajo" style="margin:8px 0 14px;max-width:520px;">
+          <button class="btn btn-gold" id="saveProfile" type="button" style="align-self:flex-start;">Guardar presentación</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="video">
+      <div class="section-head">
+        <div><div class="kicker">Capacitación audiovisual</div><h2>Video de Seguridad y Salud en el Trabajo</h2><p>Contenido audiovisual para reforzar la cultura preventiva.</p></div>
+      </div>
+      <div class="video-card">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed?listType=search&list=seguridad%20y%20salud%20en%20el%20trabajo%20prevenci%C3%B3n&autoplay=1&mute=1&playsinline=1&rel=0"
+            title="Videos sobre Seguridad y Salud en el Trabajo"
+            allow="autoplay; encrypted-media; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-caption">
+          <div><strong>Aprender para prevenir</strong><br><span>Video relacionado con SST · reproducción automática sin sonido</span></div>
+          <a class="btn btn-gold" href="https://www.youtube.com/results?search_query=seguridad+y+salud+en+el+trabajo+prevencion" target="_blank" rel="noopener noreferrer">Buscar otros videos ↗</a>
+        </div>
+        <p class="notice">Nota: los navegadores suelen permitir la reproducción automática solo cuando el video está silenciado. La disponibilidad del video integrado depende de YouTube y de la conexión a internet.</p>
+      </div>
+    </section>
+
+    <section class="section" id="recursos">
+      <div class="section-head">
+        <div><div class="kicker">Acciones cotidianas</div><h2>Recordatorios preventivos</h2><p>Antes, durante y después de realizar una tarea.</p></div>
+      </div>
+      <div class="resources">
+        <article class="card resource"><div class="icon-box">01</div><div><h3>Antes de iniciar</h3><p>Revisa el área de trabajo, identifica los peligros, verifica tus herramientas y confirma que cuentas con los EPP requeridos.</p></div></article>
+        <article class="card resource"><div class="icon-box">02</div><div><h3>Durante la tarea</h3><p>Sigue el procedimiento, mantén el orden y la limpieza, y detén el trabajo si detectas una condición de riesgo.</p></div></article>
+        <article class="card resource"><div class="icon-box">03</div><div><h3>Al finalizar</h3><p>Deja el área segura, guarda los equipos correctamente y reporta incidentes o condiciones que requieran atención.</p></div></article>
+        <article class="card resource"><div class="icon-box">04</div><div><h3>Compromiso permanente</h3><p>Participa en las capacitaciones y comparte buenas prácticas. La prevención es una tarea de todos los días.</p></div></article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>PORTAL SST</strong><br><small>Seguridad y Salud en el Trabajo</small></div>
+      <small>La prevención empieza con una decisión segura.</small>
+    </div>
+  </footer>
+
+  <script>
+    const sloganInput = document.getElementById('sloganInput');
+    const sloganDisplay = document.getElementById('sloganDisplay');
+    document.getElementById('saveSlogan').addEventListener('click', () => {
+      const value = sloganInput.value.trim();
+      if (!value) { alert('Escribe un lema antes de actualizarlo.'); return; }
+      sloganDisplay.textContent = '“' + value + '”';
+    });
+
+    const photoInput = document.getElementById('photoInput');
+    photoInput.addEventListener('change', (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) { alert('Selecciona un archivo de imagen.'); return; }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const avatar = document.getElementById('avatar');
+        avatar.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = reader.result;
+        img.alt = 'Fotografía de perfil';
+        avatar.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById('saveProfile').addEventListener('click', () => {
+      const name = document.getElementById('nameInput').value.trim();
+      const role = document.getElementById('roleInput').value.trim();
+      document.getElementById('profileName').textContent = name || 'Tu nombre aquí';
+      const roleText = document.querySelector('.profile-card p');
+      roleText.textContent = role || 'Responsable / colaborador SST';
+    });
+  </script>
+</body>
+</html>
